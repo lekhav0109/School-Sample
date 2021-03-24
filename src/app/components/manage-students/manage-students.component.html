@@ -1,0 +1,80 @@
+
+<!-- Page Header -->
+<h2 style="text-align: center;">School Sample Project</h2>
+<div style="padding: 10px;">
+    <!-- Table to display list of users  -->
+<p-table [columns]="cols" [value]="studentList" [scrollable]="true" scrollHeight="500px" selectionMode="single" dataKey="code">
+    <!-- Below are headers for Table -->
+    <ng-template pTemplate="header" let-columns>
+        <tr>
+            <th *ngFor="let col of columns">
+                {{col.header}}
+            </th>
+            <th>
+            </th>
+        </tr>
+    </ng-template>
+    <!-- List of Students using *ngFor -->
+    <ng-template pTemplate="body" let-rowData let-columns="columns">
+        <tr>
+            <td *ngFor="let col of columns">
+                {{rowData[col.field]}}
+            </td>
+            <td style="text-align: center">
+                <button type="button" class="alignment" icon="pi pi-pencil" (click)="selectedStudentEdit(rowData)" pButton></button>
+            </td> 
+        </tr>
+    </ng-template>
+</p-table>
+
+<br>
+<br>
+
+<!-- Button to Add New Student -->
+<p-button (click)="addStudentDialog()" label="Add New Student"></p-button>
+
+
+
+</div>
+
+
+<!-- ! Edit student dialog -->
+<p-dialog header="Edit Student" [(visible)]="editDialogDisplay" [style]="{width: '30vw'}"  *ngIf="selectedStudentDetail" [baseZIndex]="10000">
+    <br>
+    <div style="    text-align: center;font-size: x-large;">
+  <div style="display: flex;"><div style="width: 50%;    text-align: start;">Student Id : </div><div style="width: 50%;    text-align: start;">{{selectedStudentDetail.studentId}}</div></div>
+</div>
+<br>
+<div style="    text-align: center;font-size: x-large;">
+    <div style="display: flex;"><div style="width: 50%;    text-align: start;">Student Name : </div><div style="width: 50%;    text-align: start;">{{selectedStudentDetail.name}}</div></div>
+
+  </div>
+  <br>
+  <div style="    text-align: center;font-size: x-large;">
+    <div style="display: flex;"><div style="width: 50%;    text-align: start;">Student Grade : </div><div style="width: 50%;    text-align: start;"><input type="text" pInputText [(ngModel)]="selectedStudentDetail.grade"></div></div>
+
+  </div>
+    <ng-template pTemplate="footer">
+        <button pButton type="button" label="Update" (click)="UpdateStudent(selectedStudentDetail)" class="ui-button-info"></button>
+        <button pButton type="button" label="Cancel" (click)="CancelStudentUpdate()" class="ui-button-warning"></button>
+        <button type="button" label="Delete" icon="pi pi-trash" style="background-color:#ed3155" (click)="DeleteStudent(selectedStudentDetail)" pButton></button>
+    </ng-template>
+</p-dialog>
+
+<!-- Dialog to Add New Student -->
+<p-dialog header="Add New Student" [(visible)]="addDialogDisplay" [style]="{width: '30vw'}"   [baseZIndex]="10000">
+    <br>
+    <div style="    text-align: center;font-size: x-large;">
+        <div style="display: flex;"><div style="width: 50%;    text-align: start;">Student Name : </div><div style="width: 50%;    text-align: start;"><input type="text" pInputText [(ngModel)]="newStudent.name"></div></div>
+    
+      </div>
+      <br>
+      <div style="    text-align: center;font-size: x-large;">
+        <div style="display: flex;"><div style="width: 50%;    text-align: start;">Student Grade : </div><div style="width: 50%;    text-align: start;"><input type="text" pInputText [(ngModel)]="newStudent.grade"></div></div>
+    
+      </div>
+        <ng-template pTemplate="footer">
+            <button pButton type="button" label="Add" (click)="addNewStudent(newStudent)"  class="ui-button-info"></button>
+            <button pButton type="button" label="Cancel" (click)="addDialogDisplay=false"  class="ui-button-warning"></button>
+        </ng-template>
+    </p-dialog>
